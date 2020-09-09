@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<link rel="stylesheet" href="css/searchBar-style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+	<div class="middle">
+		<form id="formSearh" class="search-box" action="result.html" method="post">
+			<input type="text" class="input" name="inputText" value="" onkeypress="formSender(event)">
+			<button type="button" class="btn" name="button"></button>
+		</form>
+	</div>
+
+	<div id="contentResponse"></div>
+
+	<script type="text/javascript">
+		$(".btn").on("click", function () {
+			$(".input").toggleClass("inclicked");
+			$(".btn").toggleClass("close");
+		});
+	</script>
+
+	<script>
+		function formSender(e) {
+			if (e.keyCode === 13) {
+				e.preventDefault(); // Ensure it is only this code that rusn
+				var formForSubmit = document.getElementById('formSearh');
+				sessionStorage.setItem("inputText", formForSubmit.inputText.value);
+				formForSubmit.submit();
+				formForSubmit.reset();
+			}
+		}
+	</script>
+
+</body>
+
+</html>

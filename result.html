@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <!-- <link rel="stylesheet" href="css/gallery-style.css"> -->
+    <link rel="stylesheet" href="css/responsiveGallery-style.css">
+    <!-- <link rel="stylesheet" href="bootstrap/4.1.2/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="css/cropper.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <h1>Este es result.html</h1>
+    <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <div id="result-text"></div>
+    <div id="contentResponse"></div>
+
+    <div class="col-lg-4 col-md-12 mb-4" id="backdropModalParent">
+
+        <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLabel">Cropper</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="img-container">
+                            <img id="image" src="" alt="Picture" style="width:100%">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="crop">Crop</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="js/cropper.js"></script>
+    <script src="jQuery/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+    <!-- <script src="bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>   -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="js/request.js"></script>
+    <script src="js/handler.js"></script>
+    <script src="js/cropperSet.js"></script>
+    <script src="js/modal.js"></script>
+    <script src="js/cropImage.js"></script> 
+    <!-- <script src="php/upload.php"></script> -->
+
+    <script>
+        window.addEventListener('load', () => {
+            let text = sessionStorage.getItem("inputText");
+            document.getElementById('result-text').innerHTML = text;
+            createRequest(text);
+
+            //CropperSet
+
+            //Modal ON
+
+            //Modal OFF
+            
+        });
+    </script>
+
+</body>
+
+</html>
