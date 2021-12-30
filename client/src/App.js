@@ -1,10 +1,11 @@
 import React from 'react';
-// import Form from './components/Form';
+import Image from './components/Image';
 
 function App() {
 	const [data, setData] = React.useState('');
+	const [srcArray, setSrcArray] = React.useState([]);
 
-	function handleChange(event) {
+	function handleInput(event) {
 		setData(event.target.value);
 	}
 
@@ -20,25 +21,22 @@ function App() {
 			.catch(error => console.error('Error:', error))
 			.then((response) => {
 				console.log(response);
-				// response.src.map((chunk) => {
-				// 	return console.log(chunk);
-				// });
-				// 		setData(srcString);
-
+				setSrcArray(response);
 			});
 	}
-	// React.useEffect(() => {
-	// 	fetch("/api")
-	// 		.then((res) => res.json())
-	// 		.then((data) => setData(data.message));
-	// }, []);
+
+	function createImage(props) {
+		return(<Image
+			key={props.id}
+			src={props.src}
+		/>);
+	}
 
 	return (
 		<div className="container">
-			<input onChange={handleChange} type="text" value={data} />
+			<input onChange={handleInput} type="text" />
 			<button onClick={submitData}>Search</button>
-			{/* {!data ? "Loading..." : data} */}
-			<p>{data}</p>
+			{srcArray.map(createImage)}
 		</div>
 	);
 }

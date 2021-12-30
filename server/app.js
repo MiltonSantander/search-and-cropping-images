@@ -21,7 +21,6 @@ app.post('/api', function (req, res) {
     const url = 'https://www.googleapis.com/customsearch/v1?key=AIzaSyDl4DnX9zf-QVaYfOyk3Im7GVnuMnaIlPA&cx=018342974445388584067:p09wcxjsirw&q=' + req.body.message;
     https.get(url, function (apiResponse) {
         let chunkAccumulator = '';
-        let srcObject = {};
 
         apiResponse.on('data', function (chunk) {
             chunkAccumulator += chunk;
@@ -30,22 +29,24 @@ app.post('/api', function (req, res) {
         apiResponse.on('end', function () {
             let apiData = JSON.parse(chunkAccumulator);
             let srcArray = [];
-            apiData.items.map(function (item) {
-                if ('pagemap' in item) {
-                    let pageMap = item.pagemap;
+            apiData.items.map(function (value, index) {
+                if ('pagemap' in value) {
+                    let pageMap = value.pagemap;
                     if ('cse_image' in pageMap) {
                         let cseImage = pageMap.cse_image[0];
                         if ('src' in cseImage) {
                             if (!cseImage.src.includes('x-raw-image:')) {
                                 let src = cseImage.src;
-                                srcArray.push(src);
+                                let srcObject = {};
+                                srcObject['id'] = index;
+                                srcObject['src'] = src;
+                                srcArray.push(srcObject);
                             }
                         }
                     }
                 }
             });
-            srcObject['src'] = srcArray;
-            res.send(srcObject);
+            res.send(srcArray);
         });
 
     }).on('error', function (error) {
