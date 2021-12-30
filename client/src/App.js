@@ -1,7 +1,5 @@
 import React from 'react';
 // import Form from './components/Form';
-import logo from './logo.svg';
-import './App.css';
 
 function App() {
 	const [data, setData] = React.useState('');
@@ -11,21 +9,28 @@ function App() {
 	}
 
 	function submitData() {
-		console.log(data);
-		fetch('/api', {
-			method: 'POST', // or 'PUT'
-			body: JSON.stringify(data), // data can be `string` or {object}!
+		let requestConfigurationObject = {
+			method: 'POST',
+			body: JSON.stringify({ message: data }),
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		}).then(res => res.json())
+		};
+		fetch('/api', requestConfigurationObject).then(res => res.json())
 			.catch(error => console.error('Error:', error))
-			.then(response => console.log('Success:', response));
+			.then((response) => {
+				console.log(response);
+				// response.src.map((chunk) => {
+				// 	return console.log(chunk);
+				// });
+				// 		setData(srcString);
+
+			});
 	}
 	// React.useEffect(() => {
-	//   fetch("/api")
-	//     .then((res) => res.json())
-	//     .then((data) => setData(data.message));
+	// 	fetch("/api")
+	// 		.then((res) => res.json())
+	// 		.then((data) => setData(data.message));
 	// }, []);
 
 	return (
@@ -33,6 +38,7 @@ function App() {
 			<input onChange={handleChange} type="text" value={data} />
 			<button onClick={submitData}>Search</button>
 			{/* {!data ? "Loading..." : data} */}
+			<p>{data}</p>
 		</div>
 	);
 }

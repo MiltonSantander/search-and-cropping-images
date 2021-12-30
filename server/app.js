@@ -7,19 +7,21 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(express.static('public'));
 
 
 app.get('/api', function (req, res) {
-    res.json({ message: "Hello from server!" });
-    // res.sendFile(__dirname + '/index.html');
+    console.log('se recibe un request tipo GET');
 });
 
 app.post('/api', function (req, res) {
-    console.log("se recibe un resquest tipo post");
-    const url = 'https://www.googleapis.com/customsearch/v1?key=AIzaSyDl4DnX9zf-QVaYfOyk3Im7GVnuMnaIlPA&cx=018342974445388584067:p09wcxjsirw&q=' + req.body.input;
+    console.log('POST REQUEST RESPONSE');
+    console.log(req.body.message);
+    const url = 'https://www.googleapis.com/customsearch/v1?key=AIzaSyDl4DnX9zf-QVaYfOyk3Im7GVnuMnaIlPA&cx=018342974445388584067:p09wcxjsirw&q=' + req.body.message;
     https.get(url, function (apiResponse) {
         let chunkAccumulator = '';
+        let srcObject = {};
 
         apiResponse.on('data', function (chunk) {
             chunkAccumulator += chunk;
@@ -29,11 +31,21 @@ app.post('/api', function (req, res) {
             let apiData = JSON.parse(chunkAccumulator);
             let srcArray = [];
             apiData.items.map(function (item) {
-                srcArray.push(item.pagemap.cse_image[0].src);
+                if ('pagemap' in item) {
+                    let pageMap = item.pagemap;
+                    if ('cse_image' in pageMap) {
+                        let cseImage = pageMap.cse_image[0];
+                        if ('src' in cseImage) {
+                            if (!cseImage.src.includes('x-raw-image:')) {
+                                let src = cseImage.src;
+                                srcArray.push(src);
+                            }
+                        }
+                    }
+                }
             });
-            res.write("todo ok por aqui");
-            console.log(srcArray);
-            res.send();
+            srcObject['src'] = srcArray;
+            res.send(srcObject);
         });
 
     }).on('error', function (error) {
@@ -42,5 +54,5 @@ app.post('/api', function (req, res) {
 });
 
 app.listen(PORT, function () {
-    console.log('Server is running on '+PORT);
+    console.log('Server is running on ' + PORT);
 }); 
