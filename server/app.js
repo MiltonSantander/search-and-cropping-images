@@ -5,6 +5,8 @@ const request = require('request');
 const https = require('https');
 const app = express();
 const PORT = process.env.PORT || 3001;
+const apiKey = process.env.API_KEY;
+const searchEngineId = process.env.SEARCH_ENGINE_ID;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
@@ -18,7 +20,7 @@ app.get('/api', function (req, res) {
 app.post('/api', function (req, res) {
     console.log('POST REQUEST RESPONSE');
     console.log(req.body.message);
-    const url = 'https://www.googleapis.com/customsearch/v1?key=AIzaSyDl4DnX9zf-QVaYfOyk3Im7GVnuMnaIlPA&cx=018342974445388584067:p09wcxjsirw&q=' + req.body.message;
+    const url = 'https://www.googleapis.com/customsearch/v1?key=' + apiKey + '&cx=' + searchEngineId + '&q=' + req.body.message;
     https.get(url, function (apiResponse) {
         let chunkAccumulator = '';
 

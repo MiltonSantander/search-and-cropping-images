@@ -1,7 +1,7 @@
 
 # Search and Cropping Images
 
-It is a small project that I created to put together what I learned about NodeJS and ReactJS. What it basically does is search for images with Google's custom search API, and then it allows you to make clipping, with the help of the CropperJS library.
+It is a small project that I created to put together what I learned about NodeJS and ReactJS. What it basically does is search for images with Google's custom search API, and then it allows you to crop the image, with the help of the CropperJS library.
 
 
 ## Run Locally
@@ -43,12 +43,13 @@ Start the client
 
 ## Environment Variables
 
-To run this project, you will need to add the following environment variables to your .env file
+To run this project, you will need to add the following environment variables to your .env file.
 
 `API_KEY`
 
-`ANOTHER_API_KEY`
+`SEARCH_ENGINE_ID`
 
+To know more about how to get your own API key and search engine id, check out this [guide](https://developers.google.com/custom-search/v1/overview).
 
 ## Other Dependencies
-* [Node.js (version 14.x is recommended)](https://nodejs.org/en/)
+* [Node.js (version 14.x is recommended)](https://nodejs.org/en/).
